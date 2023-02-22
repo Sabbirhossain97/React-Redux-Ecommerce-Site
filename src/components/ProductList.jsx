@@ -4,7 +4,7 @@ import axios from "axios";
 import { setProducts } from "../redux/actions/productActions";
 import { useDispatch, useSelector } from "react-redux";
 import { AiOutlineSearch } from "react-icons/ai";
-import {AiOutlineShoppingCart} from 'react-icons/ai'
+import { AiOutlineShoppingCart } from "react-icons/ai";
 import { Link } from "react-router-dom";
 export default function Home() {
   const products = useSelector((state) => state.allProducts.products);
@@ -46,8 +46,7 @@ export default function Home() {
 
           <div className="mt-12 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
             {renderedProducts.map((item, key) => (
-              <a
-                href="#"
+              <div
                 className="p-6 group border rounded-lg shadow-md scale-95 hover:scale-100 hover:shadow-xl transition duration-300 flex flex-col items-center justify-center"
                 key={key}
               >
@@ -58,6 +57,7 @@ export default function Home() {
                     className="h-full w-full object-contain object-center group-hover:opacity-75"
                   />
                 </div>
+                <hr className="mt-4 bg-gray-300 w-full"></hr>
                 <h3 className="mt-4 text-sm text-gray-700 text-center">
                   {item.title}
                 </h3>
@@ -74,7 +74,7 @@ export default function Home() {
                     Add to cart
                   </button>
                 </div>
-              </a>
+              </div>
             ))}
           </div>
         </div>
