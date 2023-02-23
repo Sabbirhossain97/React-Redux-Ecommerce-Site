@@ -1,21 +1,22 @@
 import React from "react";
 import { useEffect } from "react";
 import axios from "axios";
-import { setProducts } from "../redux/actions/productActions";
+import { setProducts,incrementProducts } from "../redux/actions/productActions";
 import { useDispatch, useSelector } from "react-redux";
 import { AiOutlineSearch } from "react-icons/ai";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { Link } from "react-router-dom";
 export default function Home() {
   const products = useSelector((state) => state.allProducts.products);
+  const productCounter= useSelector((state)=> state.productCounter.totalProducts)
   const renderedProducts = products;
-  const dispatchProducts = useDispatch();
+  const dispatch = useDispatch();
   const getApidata = async () => {
     try {
       const response = await axios
         .get("https://fakestoreapi.com/products")
         .catch((err) => console.log(err));
-      dispatchProducts(setProducts(response.data));
+      dispatch(setProducts(response.data));
     } catch (error) {
       console.log(error);
     }
@@ -23,8 +24,10 @@ export default function Home() {
   useEffect(() => {
     getApidata();
   }, []);
-
-  console.log(renderedProducts);
+const addToCart = () => {
+  dispatch(incrementProducts());
+};
+console.log(productCounter);
   return (
     <div>
       <div className="bg-white">
@@ -39,8 +42,13 @@ export default function Home() {
               className="outline-none h-12 rounded-r-xl w-11/12  border-t border-b border-r border-gray-300  shadow-sm"
               placeholder="Search products..."
             />
-            <div className="flex justify-end items-center w-1/4 ">
+            <div className="relative flex justify-end items-center w-1/4 ">
               <AiOutlineShoppingCart className="text-2xl text-slate-600 " />
+              <div className=" absolute top-1 -right-1 flex justify-center items-center h-[18px] w-[18px] bg-blue-500  rounded-full">
+                <p className="text-center text-[10px] text-white ">
+                  {productCounter}
+                </p>
+              </div>
             </div>
           </div>
 
@@ -70,7 +78,10 @@ export default function Home() {
                       Details
                     </button>
                   </Link>
-                  <button className="mt-4 ml-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg">
+                  <button
+                    onClick={addToCart}
+                    className="mt-4 ml-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg"
+                  >
                     Add to cart
                   </button>
                 </div>

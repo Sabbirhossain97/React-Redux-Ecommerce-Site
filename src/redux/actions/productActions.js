@@ -19,3 +19,10 @@ export const removeSelectedProducts = (products) => {
   };
 };
 
+export const incrementProducts = (products) => {
+  return {
+    type: ActionTypes.INCREMENT_PRODUCT,
+    payload: products,
+  };
+};
+

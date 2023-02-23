@@ -4,27 +4,29 @@ import { useParams } from "react-router";
 import {
   selectedProducts,
   removeSelectedProducts,
+  incrementProducts,
 } from "../redux/actions/productActions";
 import { useSelector, useDispatch } from "react-redux";
 
 export default function ProductDetails() {
   const productId = useParams();
   const product = useSelector((state) => state.selectedProducts);
-  const dispatchSelectedProduct = useDispatch();
+  const dispatch = useDispatch();
   const getProductDetails = async () => {
     const response = await axios
       .get(`https://fakestoreapi.com/products/${productId.id}`)
       .catch((error) => console.log(error));
-    dispatchSelectedProduct(selectedProducts(response.data));
+    dispatch(selectedProducts(response.data));
   };
   useEffect(() => {
     if (productId && productId !== "") {
       getProductDetails();
     }
 
-    // dispatchSelectedProduct(removeSelectedProducts());
+    dispatch(removeSelectedProducts());
   }, [productId]);
   console.log(product);
+  
   return (
     <div>
       <section className="text-gray-600 body-font overflow-hidden">
@@ -32,7 +34,7 @@ export default function ProductDetails() {
           <div className="lg:w-4/5 mx-auto flex flex-wrap">
             <img
               alt="ecommerce"
-              className="lg:w-1/2 w-full lg:h-auto h-64 object-contain object-center rounded"
+              className="lg:w-1/3 w-full lg:h-auto h-64 object-contain object-center rounded"
               src={product.image}
             />
             <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
@@ -101,7 +103,9 @@ export default function ProductDetails() {
                   </svg>  */}
                   <span className="text-gray-600 ">
                     Rating{" "}
-                    <span className="text-blue-500">{product.rating.rate}</span>
+                    <span className="text-blue-500">
+                      {product.rating?.rate}
+                    </span>
                   </span>
                 </span>
                 {/* <span className="flex ml-3 pl-3 py-2 border-l-2 border-gray-200 space-x-2s">
@@ -180,7 +184,10 @@ export default function ProductDetails() {
                 <span className="title-font font-medium text-2xl text-gray-900">
                   ${product.price}
                 </span>
-                <button className="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">
+                <button
+                  
+                  className="scale-95 hover:scale-100 flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded"
+                >
                   Add to cart
                 </button>
                 {/* <button className="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">

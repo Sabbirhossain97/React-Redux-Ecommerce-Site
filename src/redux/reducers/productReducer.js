@@ -2,6 +2,7 @@ import { ActionTypes } from "../contents/action-types";
 
 const initialState = {
   products: [],
+  totalProducts: 0,
 };
 
 export const productReducer = (state = initialState, { type, payload }) => {
@@ -25,6 +26,21 @@ export const selectedProductReducer = (state = {}, { type, payload }) => {
       };
     case ActionTypes.REMOVE_SELECTED_PRODUCT:
       return {};
+    default:
+      return state;
+  }
+};
+
+export const incrementProductReducer = (
+  state = initialState,
+  { type, payload }
+) => {
+  switch (type) {
+    case ActionTypes.INCREMENT_PRODUCT:
+      return {
+        ...state,
+        totalProducts: state.totalProducts + 1,
+      };
     default:
       return state;
   }
