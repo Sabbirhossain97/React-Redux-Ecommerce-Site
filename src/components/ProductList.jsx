@@ -1,14 +1,19 @@
 import React from "react";
 import { useEffect } from "react";
 import axios from "axios";
-import { setProducts,incrementProducts } from "../redux/actions/productActions";
+import {
+  setProducts,
+  incrementProducts,
+} from "../redux/actions/productActions";
 import { useDispatch, useSelector } from "react-redux";
 import { AiOutlineSearch } from "react-icons/ai";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { Link } from "react-router-dom";
 export default function Home() {
   const products = useSelector((state) => state.allProducts.products);
-  const productCounter= useSelector((state)=> state.productCounter.totalProducts)
+  const productCounter = useSelector(
+    (state) => state.productCounter.totalProducts
+  );
   const renderedProducts = products;
   const dispatch = useDispatch();
   const getApidata = async () => {
@@ -24,10 +29,10 @@ export default function Home() {
   useEffect(() => {
     getApidata();
   }, []);
-const addToCart = () => {
-  dispatch(incrementProducts());
-};
-console.log(productCounter);
+  const addToCart = () => {
+    dispatch(incrementProducts());
+  };
+  console.log(productCounter);
   return (
     <div>
       <div className="bg-white">
@@ -44,11 +49,15 @@ console.log(productCounter);
             />
             <div className="relative flex justify-end items-center w-1/4 ">
               <AiOutlineShoppingCart className="text-2xl text-slate-600 " />
-              <div className=" absolute top-1 -right-1 flex justify-center items-center h-[18px] w-[18px] bg-blue-500  rounded-full">
-                <p className="text-center text-[10px] text-white ">
-                  {productCounter}
-                </p>
-              </div>
+              {productCounter > 0 ? (
+                <div className=" absolute top-1 -right-1 flex justify-center items-center h-[18px] w-[18px] bg-blue-500  rounded-full">
+                  <p className="text-center text-[10px] text-white ">
+                    {productCounter}
+                  </p>
+                </div>
+              ) : (
+                ""
+              )}
             </div>
           </div>
 
