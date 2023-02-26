@@ -4,6 +4,7 @@ import axios from "axios";
 import {
   setProducts,
   incrementProducts,
+  addProductsToCart,
 } from "../redux/actions/productActions";
 import { useDispatch, useSelector } from "react-redux";
 import { AiOutlineSearch } from "react-icons/ai";
@@ -29,13 +30,15 @@ export default function Home() {
   useEffect(() => {
     getApidata();
   }, []);
-  const addToCart = () => {
+  const addToCart = async (productId) => {
+    const response = await axios
+      .get(`https://fakestoreapi.com/products/${productId}`)
+      .catch((err) => console.log(err));
     dispatch(incrementProducts());
+    dispatch(addProductsToCart(response.data));
   };
-  
-const handleCart=()=> {
-  console.log("you clicked!")
-}
+
+  const handleCart = () => {};
   return (
     <div>
       <div className="bg-white min-h-screen">
@@ -50,11 +53,11 @@ const handleCart=()=> {
               className="outline-none h-12 rounded-r-xl w-11/12  border-t border-b border-r border-gray-300  shadow-sm"
               placeholder="Search products..."
             />
-            <div className="relative flex justify-end items-center w-1/4 ">
-              <Link to="/checkout">
+            <div className="relative flex justify-end items-center w-1/4  ">
+              <Link to="/cart">
                 <AiOutlineShoppingCart
                   onClick={handleCart}
-                  className="text-2xl text-slate-600 "
+                  className="text-3xl text-slate-600 scale-90 hover:scale-100 transition duration-300 rounded-full"
                 />
               </Link>
               {productCounter > 0 ? (
@@ -96,7 +99,7 @@ const handleCart=()=> {
                     </button>
                   </Link>
                   <button
-                    onClick={addToCart}
+                    onClick={() => addToCart(item.id)}
                     className="mt-4 ml-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg"
                   >
                     Add to cart

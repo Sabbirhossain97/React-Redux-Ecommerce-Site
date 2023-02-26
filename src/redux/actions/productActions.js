@@ -26,3 +26,10 @@ export const incrementProducts = (products) => {
   };
 };
 
+export const addProductsToCart = (products) => {
+  return {
+    type: ActionTypes.ADD_TO_CART,
+    payload: products,
+  };
+};
+

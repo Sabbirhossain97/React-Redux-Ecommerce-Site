@@ -3,6 +3,7 @@ import { ActionTypes } from "../contents/action-types";
 const initialState = {
   products: [],
   totalProducts: 0,
+  cart: []
 };
 
 export const productReducer = (state = initialState, { type, payload }) => {
@@ -40,6 +41,21 @@ export const incrementProductReducer = (
       return {
         ...state,
         totalProducts: state.totalProducts + 1,
+      };
+    default:
+      return state;
+  }
+};
+
+export const addToCartReducer = (
+  state = initialState,
+  { type, payload }
+) => {
+  switch (type) {
+    case ActionTypes.ADD_TO_CART:
+      return {
+        ...state,
+        cart: [...state.cart,payload]
       };
     default:
       return state;
