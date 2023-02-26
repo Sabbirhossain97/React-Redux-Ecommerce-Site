@@ -32,10 +32,13 @@ export default function Home() {
   const addToCart = () => {
     dispatch(incrementProducts());
   };
-  console.log(productCounter);
+  
+const handleCart=()=> {
+  console.log("you clicked!")
+}
   return (
     <div>
-      <div className="bg-white">
+      <div className="bg-white min-h-screen">
         <div className="mx-auto max-w-2xl py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
           <div className="flex ">
             <div className="flex justify-center items-center p-2 border-t border-l border-b border-gray-300 rounded-l-xl">
@@ -48,7 +51,12 @@ export default function Home() {
               placeholder="Search products..."
             />
             <div className="relative flex justify-end items-center w-1/4 ">
-              <AiOutlineShoppingCart className="text-2xl text-slate-600 " />
+              <Link to="/checkout">
+                <AiOutlineShoppingCart
+                  onClick={handleCart}
+                  className="text-2xl text-slate-600 "
+                />
+              </Link>
               {productCounter > 0 ? (
                 <div className=" absolute top-1 -right-1 flex justify-center items-center h-[18px] w-[18px] bg-blue-500  rounded-full">
                   <p className="text-center text-[10px] text-white ">
